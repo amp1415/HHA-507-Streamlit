@@ -69,9 +69,9 @@ st.header('Hospitals in New York Summary')
 st.dataframe(hospitals_ny)
 
 
-# Create a breakdown of the hospital types for New York
-table1 = hospitals_ny['hospital_type'].value_counts().reset_index()
-st.header('Hospital Types for New York')
+# Create a breakdown of the hospital types for New York (Q1 ANSWER)
+table1 = hospitals_ny['hospital_overall_rating'].value_counts().reset_index()
+st.header('Hospital rating for New York')
 st.dataframe(table1)
 
 
@@ -94,3 +94,18 @@ SBUinfo = hospitaldf[hospitaldf['hospital_name'] == 'SUNY/STONY BROOK UNIVERSITY
 st.header('Stony Brook University Comparison')
 st.dataframe(SBUinfo)
 st.markdown('In comparison to the other hospitals in New York')
+
+#QUESTIONS 2-6
+#2
+table2 = outpatientdf['average_estimated_submitted_charges'].value_counts().reset_index()
+st.header('outpatient drgs')
+st.dataframe(table2)
+#3
+
+#4
+table4 = outpatientdf['average_total_payments'].value_counts().reset_index()
+st.header('outpatient services')
+st.dataframe(table4)
+#5
+
+#6
