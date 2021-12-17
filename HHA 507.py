@@ -37,13 +37,26 @@ outpaitentdf= load_outpatient()
 
 ##PREVIEW DATA SET
 st.header('Hospital Data Preview')
-st.markdown('This dataset consists of 5,314 hospitals in the United States. Each row represents a unique hospital, referenced by "provider_id", and additional info for each location.')
+st.markdown('This dataset consists of 5,314 hospitals in the United States.')
 st.dataframe(load_hospital())
 
 st.header('Inpatient Data Preview')
-st.markdown('This dataset consists of drg codes for multiple inpatient locations. Each row represents a unique drg code, referenced by "drg_definition", along with payment details for each code.')
+st.markdown('DRG CODE AND PAYMENT')
 st.dataframe(load_inpatient())
 
 st.header('Outpatient Data Preview')
-st.markdown('This dataset consists of apc codes for multiple outpatient locations. Each row represents a unique apc code, referenced by "apc", along with service and payment details for each code.')
+st.markdown('UNIQUE APC CODES')
 st.dataframe(load_outpatient())
+##NY HOSPITALS
+hospitals_ny = hospital_df[hospital_df['state'] == 'NY']
+st.header('Hospitals in New York Summary')
+st.markdown('NY HOSPITALS ONLY')
+st.dataframe(hospitals_ny)
+
+##NY HOSPITAL BREAKDOWN
+table1 = hospitals_ny['hospital_type'].value_counts().reset_index()
+st.header('Hospital Types for NY')
+st.markdown('5 NY HOSPITALS AND AMOUNTS')
+st.dataframe(table1)
+st.markdown('ACUTE CARE IS MOST POPULAR IN NY')
+st.markdown('SBU IS AN ACUTE CARE FACILITY')
