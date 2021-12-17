@@ -27,7 +27,7 @@ st.title('HHA 507 - Final Assignment')
 st.write('Amanda Power :sunglasses:')
 st.write('Questions:')
 st.write('1. How does Stony Brook compare to the rest of NY?')
-st.write('2. Which APC code has the largest number of services for New York?')
+st.write('2. Which APC code has the largest number of services for New York and SBU?')
 st.write('3. Where are most of the hospitals located in New York state?')
 
 #LOAD DATA
@@ -85,8 +85,8 @@ sbu_services = sbu_outpatient.pivot_table(index =['apc'],values=['outpatient_ser
 st.header('Total Outpatient Services for APC Codes at Stony Brook')
 st.markdown('This pivot table shows the number of outpatient services per apc code for Stony Brook University Hospital')
 st.dataframe(sbu_services)
-st.markdown('Per the table above, you can see that the apc cde with the largest amount of services is 0269 - Level I Echocardiogram Without Contrast.')
-st.markdown('In comparison to the cumulative outpatient data for all of New York, where apc code 0634 - Hospital Clinic Visits was the service with the most services.')
+st.markdown('apc cde with the largest amount of services is 0269 - Level I Echocardiogram Without Contrast.')
+
 
 
 
