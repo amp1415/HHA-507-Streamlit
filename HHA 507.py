@@ -41,7 +41,7 @@ st.markdown('This dataset consists of 5,314 hospitals in the United States.')
 st.dataframe(load_hospital())
 
 st.header('Inpatient Data Preview')
-st.markdown('DRG CODE AND PAYMENT')
+st.markdown('SBU')
 st.dataframe(load_inpatient())
 
 st.header('Outpatient Data Preview')
@@ -53,6 +53,7 @@ st.header('Hospitals in New York Summary')
 st.markdown('NY HOSPITALS ONLY')
 st.dataframe(hospitals_ny)
 
+
 ##NY HOSPITAL BREAKDOWN
 table1 = hospitals_ny['hospital_type'].value_counts().reset_index()
 st.header('Hospital Types for NY')
@@ -60,6 +61,15 @@ st.markdown('5 NY HOSPITALS AND AMOUNTS')
 st.dataframe(table1)
 st.markdown('ACUTE CARE IS MOST POPULAR IN NY')
 st.markdown('SBU IS AN ACUTE CARE FACILITY')
+
+# BREAKDOWN OF COMMON OUTPATIENT SERVICES 
+outpatient_ny = outpatientdf[outpatientdf['provider_state'] == 'NY']
+outpatient_discharges = outpatient_ny.groupby('apc')['outpatient_services'].sum().reset_index()
+st.header('OUTPATIENT FOR NY')
+st.markdown('This dataset shows the number of outpatient services per APC code for NYS.')
+st.dataframe(outpatient_discharges)
+st.markdown('The apc code with the most outpatient services for New York is 0634 - Hospital Clinic Visits.')
+
 ##SBU BREAKDOWN LOOK AT IN AND OUT PATIENT
 sbu_inpatient = inpatientdf[inpatientdf['provider_id']==330393]
 st.header('FILTERED SBU INPATIENT DATA')
@@ -70,6 +80,14 @@ sbu_outpatient = outpatientdf[outpatientdf['provider_id']==330393]
 st.header('Outpatient Data for Stony Brook')
 st.markdown('This dataset filters out outpatient data for Stony Brook University Hospital from the main outpatient dataframe')
 st.dataframe(sbu_outpatient) 
+
+sbu_services = sbu_outpatient.pivot_table(index =['apc'],values=['outpatient_services'],aggfunc='mean')
+st.header('Total Outpatient Services for APC Codes at Stony Brook')
+st.markdown('This pivot table shows the number of outpatient services per apc code for Stony Brook University Hospital')
+st.dataframe(sbu_services)
+st.markdown('Per the table above, you can see that the apc cde with the largest amount of services is 0269 - Level I Echocardiogram Without Contrast.')
+st.markdown('In comparison to the cumulative outpatient data for all of New York, where apc code 0634 - Hospital Clinic Visits was the service with the most services.')
+
 
 
 ##MAP
