@@ -14,7 +14,8 @@ def load_inpatient():
     return inpatientdf
 @st.cache
 def load_outpatient():
-    outpaitent= pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_DataSci_507/main/Deployment_Streamlit/outpatient_2015.csv')
+    outpatientdf = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_DataSci_507/main/Deployment_Streamlit/outpatient_2015.csv')
+    return outpatientdf
 
 # FAKE LOADER BAR TO STIMULATE LOADING    
 # my_bar = st.progress(0)
@@ -28,7 +29,6 @@ st.write('Questions:')
 st.write('1. How does Stony Brook compare to the rest of NY?')
 st.write('2. Which APC code has the largest number of services for New York?')
 st.write('3. Where are most of the hospitals located in New York state?')
-st.write('4. How had better care timliness? NY or CA')
 
 #LOAD DATA
 hospital_df = load_hospital()
@@ -60,3 +60,31 @@ st.markdown('5 NY HOSPITALS AND AMOUNTS')
 st.dataframe(table1)
 st.markdown('ACUTE CARE IS MOST POPULAR IN NY')
 st.markdown('SBU IS AN ACUTE CARE FACILITY')
+##SBU BREAKDOWN LOOK AT IN AND OUT PATIENT
+sbu_inpatient = inpatientdf[inpatientdf['provider_id']==330393]
+st.header('FILTERED SBU INPATIENT DATA')
+st.markdown('INPATIENT SBU')
+st.dataframe(sbu_inpatient)
+
+sbu_outpatient = outpatientdf[outpatientdf['provider_id']==330393]
+st.header('Outpatient Data for Stony Brook')
+st.markdown('This dataset filters out outpatient data for Stony Brook University Hospital from the main outpatient dataframe')
+st.dataframe(sbu_outpatient) 
+
+
+##MAP
+st.subheader('Map of NY Hospital Locations')
+st.markdown('USING MAPPING TOOL')
+hospitals_ny_gps = hospitals_ny['location'].str.strip('()').str.split(' ', expand=True).rename(columns={0: 'Point', 1:'lon', 2:'lat'}) 	
+hospitals_ny_gps['lon'] = hospitals_ny_gps['lon'].str.strip('(')
+hospitals_ny_gps = hospitals_ny_gps.dropna()
+hospitals_ny_gps['lon'] = pd.to_numeric(hospitals_ny_gps['lon'])
+hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
+st.map(hospitals_ny_gps)
+
+
+st.title ('Bye for now')
+
+
+
+
